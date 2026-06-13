@@ -6,7 +6,12 @@ from app.services.csv_service import process_csv
 router = APIRouter()
 
 
-@router.post("/upload-csv")
+@router.post(
+    "/upload-csv",
+    tags=["Upload"],
+    summary="Upload drilling CSV",
+    description="Uploads a drilling dataset and returns basic file statistics."
+)
 async def upload_csv(file: UploadFile = File(...)):
 
     upload_dir = "../data/uploads"
