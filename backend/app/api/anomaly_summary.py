@@ -7,12 +7,15 @@ router = APIRouter()
 
 
 @router.get(
-    "/anomalies",
-    tags=["Analytics"],
-    summary="Detect drilling anomalies"
+    "/anomaly-summary",
+    tags=["Analytics"]
 )
-def get_anomalies():
+def anomaly_summary():
 
-    return detect_anomalies(
+    anomalies = detect_anomalies(
         LATEST_UPLOAD_PATH
     )
+
+    return {
+        "count": len(anomalies)
+    }

@@ -1,36 +1,34 @@
-from sklearn.ensemble import IsolationForest
-
 from app.utils.csv_validator import validate_csv
 
 
 def detect_anomalies(file_path):
     """
-    Detect drilling anomalies using Isolation Forest.
+    Rule-based drilling anomaly detection.
     """
 
     df = validate_csv(file_path)
 
-    features = df[
-        [
-            "pressure",
-            "rpm",
-            "temperature"
-        ]
-    ]
+    anomalies = []
 
-    model = IsolationForest(
-        contamination=0.1,
-        random_state=42
-    )
+    for _, row in df.iterrows():
 
-    predictions = model.fit_predict(features)
+        reasons = []
 
-    df["anomaly"] = predictions
+        if row["pressure"] > 4200:
+            reasons.append("High Pressure")
 
-    anomaly_rows = df[
-        df["anomaly"] == -1
-    ]
+        if row["rpm"] < 90:
+            reasons.append("Low RPM")
 
-    return anomaly_rows.to_dict(
-        orient="records"
-    )
+        if row["temperature"] > 110:
+            reasons.append("High Temperature")
+
+        if reasons:
+
+            anomaly = row.to_dict()
+
+            anomaly["reason"] = ", ".join(reasons)
+
+            anomalies.append(anomaly)
+
+    return anomalies
