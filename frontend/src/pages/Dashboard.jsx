@@ -19,15 +19,11 @@ function Dashboard() {
   const [alerts, setAlerts] = useState([]);
   const [anomalies, setAnomalies] = useState([]);
 
-  useEffect(() => {
-    loadDashboardData();
-  }, []);
-
   const loadDashboardData = async () => {
     try {
       const [
         summaryData,
-        chartDataResponse,
+        chartDataData,
         alertsData,
         anomaliesData,
       ] = await Promise.all([
@@ -38,21 +34,31 @@ function Dashboard() {
       ]);
 
       setSummary(summaryData);
-      setChartData(chartDataResponse);
+      setChartData(chartDataData);
       setAlerts(alertsData);
       setAnomalies(anomaliesData);
+
     } catch (error) {
-      console.error("Dashboard Load Error:", error);
+      console.error(
+        "Dashboard Load Error:",
+        error
+      );
     }
   };
 
+  useEffect(() => {
+    loadDashboardData();
+  }, []);
+
   return (
-    <>
+    <div>
       <Navbar />
 
-      <main className="dashboard-container">
+      <div className="dashboard-container">
 
-        <UploadSection />
+        <UploadSection
+          onUploadSuccess={loadDashboardData}
+        />
 
         <h2 className="section-title">
           Operational Overview
@@ -75,8 +81,8 @@ function Dashboard() {
 
         <AlertsPanel alerts={alerts} />
 
-      </main>
-    </>
+      </div>
+    </div>
   );
 }
 

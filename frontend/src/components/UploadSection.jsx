@@ -2,7 +2,7 @@ import { useState } from "react";
 import { uploadCSV } from "../services/api";
 import toast from "react-hot-toast";
 
-function UploadSection() {
+function UploadSection({ onUploadSuccess }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +21,13 @@ function UploadSection() {
         `Uploaded successfully (${response.rows} records)`
       );
 
+      // Refresh dashboard data automatically
+      if (onUploadSuccess) {
+        await onUploadSuccess();
+      }
+
       console.log(response);
+
     } catch (error) {
       console.error(error);
       toast.error("Upload failed");

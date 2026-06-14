@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.services.chart_service import get_chart_data
-from app.config import SAMPLE_DATA_PATH
+from app.config import LATEST_UPLOAD_PATH
 
 router = APIRouter()
 
@@ -10,11 +10,6 @@ router = APIRouter()
     "/chart-data",
     tags=["Analytics"],
     summary="Get chart-ready drilling data",
-    description="Returns drilling records formatted for frontend chart visualization."
 )
 def chart_data():
-    """
-    Return drilling chart data.
-    """
-
-    return get_chart_data(SAMPLE_DATA_PATH)
+    return get_chart_data(LATEST_UPLOAD_PATH)

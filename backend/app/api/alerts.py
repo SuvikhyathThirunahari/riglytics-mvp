@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.services.alert_service import generate_alerts
-from app.config import SAMPLE_DATA_PATH
+from app.config import LATEST_UPLOAD_PATH
 
 router = APIRouter()
 
@@ -17,4 +17,4 @@ def get_alerts():
     Return drilling alerts.
     """
 
-    return generate_alerts(SAMPLE_DATA_PATH)
+    return generate_alerts(LATEST_UPLOAD_PATH)

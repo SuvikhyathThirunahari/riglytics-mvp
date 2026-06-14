@@ -23,6 +23,11 @@ SAMPLE_DATA_PATH = os.path.join(
     "drilling_data.csv"
 )
 
+LATEST_UPLOAD_PATH = os.path.join(
+    UPLOAD_DIR,
+    "latest_upload.csv"
+)
+
 os.makedirs(
     UPLOAD_DIR,
     exist_ok=True

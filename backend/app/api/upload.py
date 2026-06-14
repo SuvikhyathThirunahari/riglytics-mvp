@@ -1,7 +1,8 @@
 from fastapi import APIRouter, UploadFile, File
-import os
+import shutil
 
 from app.services.csv_service import process_csv
+from app.config import LATEST_UPLOAD_PATH
 
 router = APIRouter()
 
@@ -14,16 +15,10 @@ router = APIRouter()
 )
 async def upload_csv(file: UploadFile = File(...)):
 
-    upload_dir = "../data/uploads"
+    with open(LATEST_UPLOAD_PATH, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
-    os.makedirs(upload_dir, exist_ok=True)
-
-    file_path = os.path.join(upload_dir, file.filename)
-
-    with open(file_path, "wb") as buffer:
-        buffer.write(await file.read())
-
-    result = process_csv(file_path)
+    result = process_csv(LATEST_UPLOAD_PATH)
 
     return {
         "filename": file.filename,

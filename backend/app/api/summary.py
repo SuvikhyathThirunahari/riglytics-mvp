@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.services.summary_service import get_summary_metrics
-from app.config import SAMPLE_DATA_PATH
+from app.config import LATEST_UPLOAD_PATH
 
 router = APIRouter()
 
@@ -17,4 +17,4 @@ def get_summary():
     Return drilling summary metrics.
     """
 
-    return get_summary_metrics(SAMPLE_DATA_PATH)
+    return get_summary_metrics(LATEST_UPLOAD_PATH)
