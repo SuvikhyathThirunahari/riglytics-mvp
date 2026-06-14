@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 /*
@@ -43,12 +43,15 @@ export const getChartData = async () => {
   const response = await API.get("/chart-data");
   return response.data;
 };
+
 export const getAlerts = async () => {
   const response = await API.get("/alerts");
   return response.data;
 };
+
 export const getAnomalies = async () => {
   const response = await API.get("/anomalies");
   return response.data;
 };
+
 export default API;
